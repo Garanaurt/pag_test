@@ -9,15 +9,11 @@ import pyperclip
 import re
 import webbrowser
 
-
-
-keywords_list = ['python', 'js', 'html'] # keywords for search
+keywords_list = ['python', 'js'] # keywords for search
 
 site = "https://habr.com" # our site
 
 num_visits = 2 
-
-
 
 class TrafficBot:
     def __init__(self, site_url, search_keywords, num_visits):
@@ -39,7 +35,7 @@ class TrafficBot:
 
 
     def move_proportionally(self, x, y, duration=0)-> None:
-        """move mouse propotionally screen size"""
+        """move mouse propotionally screen size 1366/768"""
         original_width, original_height = 1366, 768
         size = pag.size()
         new_width, new_height = (size.width, size.height)
@@ -95,6 +91,7 @@ class TrafficBot:
                                 self.visit_site(randint(10, 15), box, k)
                                 time.sleep(2)
                                 pag.press('home')
+                                time.sleep(1)
                 if site_on_page[0] == True:
                     self.visit_site(randint(300, 600), site_on_page[1], site_on_page[2])
                     return True
@@ -109,9 +106,9 @@ class TrafficBot:
     
 
     def get_random_sites_for_visit(self) -> dict:
-        """Get links on the page for random visits."""
+        """Get links on the page for random visits"""
         sites_for_visit = {}
-        for i in range(5):
+        for i in range(6):
             results = pag.locateAllOnScreen('https.png')
             sites_for_visit[i] = results
             self.move_proportionally(300, 340)
@@ -136,7 +133,7 @@ class TrafficBot:
         
 
     def check_site_on_page(self) -> tuple:
-        """find our link in the text of the page"""
+        """find our link in the text of the page. If site-link on page - check coordinates"""
         pag.hotkey('ctrl', 'a')
         pag.hotkey('ctrl', 'c')
         self.move_proportionally(1000, 300)
@@ -160,7 +157,7 @@ class TrafficBot:
 
 
     def visit_site(self, time_to_visit, coords, scroll) -> None:
-        """visit the site from the search page and scroll it """
+        """visit the site from the search page and scroll it"""
         for _ in range(scroll):
             pag.scroll(-3)
             time.sleep(1)
