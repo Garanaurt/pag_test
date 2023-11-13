@@ -15,9 +15,6 @@ TrafficBot is a simple Python script designed to simulate organic traffic to a s
 
 
 
-### Usage:
-Absolutely, adding instructions to install the required libraries from the `requirements.txt` file is a good practice. You can modify the installation section as follows:
-
 ### Installation:
 
 1. **Clone this repository:**
@@ -41,6 +38,7 @@ Absolutely, adding instructions to install the required libraries from the `requ
 
 4. **Screenshot:**
    - Place a screenshot of the target website URL named `site_url_screen.png` in the same folder as the script. This screenshot is used to locate the website link on the search page.
+     
         ![screenshot of link](site_url_screen.png)
 
 5. **Execution:**
