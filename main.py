@@ -11,11 +11,11 @@ import webbrowser
 
 
 
-keywords_list = ['Selenium'] # keywords for search
+keywords_list = ['python', 'js', 'html'] # keywords for search
 
-site = "https://otus.ru" # our site
+site = "https://habr.com" # our site
 
-num_visits = 2 #
+num_visits = 2 
 
 
 

@@ -19,8 +19,8 @@ TrafficBot is a simple Python script designed to simulate organic traffic to a s
 
 1. **Clone this repository:**
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone git clone git@github.com:Garanaurt/pag_test.git
+   cd pag_test
    ```
 
 2. **Install the required libraries:**
