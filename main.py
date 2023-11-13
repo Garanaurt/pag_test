@@ -22,10 +22,9 @@ num_visits = 2 #
 class TrafficBot:
     def __init__(self, site_url, search_keywords, num_visits):
         self.site_url = site_url
-        self.search_keywords = search_keywords
+        self.search_keywords = search_keywords.copy()
         self.system = platform.system()
         self.num_visits = num_visits
-        self.start_browser()
 
 
     def start_browser(self) -> None:
@@ -53,21 +52,25 @@ class TrafficBot:
 
     def search_and_fool_site(self)-> None:
         """main method for searching and visits site"""
+        
         for _ in range(self.num_visits):
             self.start_browser()
             time.sleep(3)
-            random.shuffle(self.search_keywords)
+            keywords = self.search_keywords.copy()
+            random.shuffle(keywords)
             site_fool = False
             while not site_fool:
                 try:
-                    keyword = search_keywords.pop()
+                    keyword = keywords.pop()
                     site_fool = self.search(keyword)
                 except IndexError:
                     print('all keywords are passed or the list of keywords is empty')
                     self.close_browser()
+                    quit()
             else:
                 print(f'site fooling done - #{_ + 1}')
                 self.close_browser()
+        quit()
                 
             
     def search(self, keyword) -> bool:
@@ -161,6 +164,7 @@ class TrafficBot:
         for _ in range(scroll):
             pag.scroll(-3)
             time.sleep(1)
+        time.sleep(1)
         pag.click(coords)
         time.sleep(2)
         time_start = datetime.now()
