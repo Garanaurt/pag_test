@@ -48,8 +48,8 @@ class TrafficBot:
 
     def search_and_fool_site(self)-> None:
         """main method for searching and visits site"""
-        
-        for _ in range(self.num_visits):
+        visit_done = 0
+        while visit_done < len(self.num_visits):
             self.start_browser()
             time.sleep(3)
             keywords = self.search_keywords.copy()
@@ -59,12 +59,14 @@ class TrafficBot:
                 try:
                     keyword = keywords.pop()
                     site_fool = self.search(keyword)
+                    if site_fool:
+                        visit_done += 1
                 except IndexError:
                     print('all keywords are passed or the list of keywords is empty')
                     self.close_browser()
                     quit()
             else:
-                print(f'site fooling done - #{_ + 1}')
+                print(f'site fooling done - #{visit_done}')
                 self.close_browser()
         quit()
                 
