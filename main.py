@@ -49,7 +49,7 @@ class TrafficBot:
     def search_and_fool_site(self)-> None:
         """main method for searching and visits site"""
         visit_done = 0
-        while visit_done < len(self.num_visits):
+        while visit_done < self.num_visits:
             self.start_browser()
             time.sleep(3)
             keywords = self.search_keywords.copy()
