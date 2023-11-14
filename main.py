@@ -64,7 +64,6 @@ class TrafficBot:
                 except IndexError:
                     print('all keywords are passed or the list of keywords is empty')
                     self.close_browser()
-                    quit()
             else:
                 print(f'site fooling done - #{visit_done}')
                 self.close_browser()
