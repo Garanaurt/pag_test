@@ -33,7 +33,6 @@ class TrafficBot:
             time.sleep(3)
 
 
-
     def close_browser(self) -> None:
         pag.hotkey('ctrl', 'w')
 
@@ -125,8 +124,8 @@ class TrafficBot:
 
     def load_search_page(self, keyword, start) -> None:
         """get search page google.com"""
-        self.move_proportionally(500, 80)
-        pag.click()
+        #self.move_proportionally(500, 80)
+        #pag.click()
         url = f'https://www.google.com/search?q={keyword}&start={start}'
         pag.hotkey('ctrl', 'a')
         time.sleep(1)
