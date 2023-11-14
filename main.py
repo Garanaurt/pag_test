@@ -28,6 +28,10 @@ class TrafficBot:
         if self.system == 'Linux':
             webbrowser.open('https://www.google.com/')
             time.sleep(3)
+        elif self.system == 'Windows':
+            webbrowser.open('https://www.google.com/')
+            time.sleep(3)
+
 
 
     def close_browser(self) -> None:
