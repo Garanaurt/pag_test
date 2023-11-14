@@ -124,6 +124,8 @@ class TrafficBot:
 
     def load_search_page(self, keyword, start) -> None:
         """get search page google.com"""
+        url_area = pag.locateOnScreen('star.png')
+        pag.click(url_area)
         #self.move_proportionally(500, 80)
         #pag.click()
         url = f'https://www.google.com/search?q={keyword}&start={start}'
