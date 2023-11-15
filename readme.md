@@ -41,7 +41,7 @@ TrafficBot is a simple Python script designed to simulate organic traffic to a s
      
         ![screenshot of link](site_url_screen.png)
 
-    - Place a screenshot from your browser showing a portion of the result link from any search output named `site_url_screen.png` in the same folder as the script. This screenshot is used to locate are all link on the search page.
+    - Place a screenshot from your browser showing a portion of the result link from any search output named `https.png` in the same folder as the script. This screenshot is used to locate are all link on the search page.
 
         ![portion of link](https.png)
 
