@@ -9,6 +9,7 @@ import pyperclip
 import re
 import webbrowser
 
+
 keywords_list = ['js', 'python'] # keywords for search
 
 site = "https://habr.com" # our site
@@ -18,17 +19,16 @@ num_visits = 2
 
 class TrafficBot:
     def __init__(self, site_url, search_keywords, num_visits):
+        """check OS, check display center"""
         self.site_url = site_url
         self.search_keywords = search_keywords.copy()
         self.system = platform.system()
         self.num_visits = num_visits
         self.center_displ = [pag.size()[0] // 2, pag.size()[1] // 2]
-        print(self.center_displ)
-
 
 
     def start_browser(self) -> None:
-        """start browser in os, tested on linux"""
+        """start browser"""
         if self.system == 'Linux':
             webbrowser.open('https://www.google.com/')
             time.sleep(3)
@@ -39,7 +39,6 @@ class TrafficBot:
 
     def close_browser(self) -> None:
         pag.hotkey('ctrl', 'w')
-
 
 
     def search_and_fool_site(self)-> None:
@@ -69,7 +68,8 @@ class TrafficBot:
     def search(self, keyword) -> bool:
         """on the first iteration of the search, the bot gets all the links on the page and randomly jumps to two for it,
         if our site on the first page - the bot goes to it after the first two pages
-        on the second and + iteration, the bot checks our site on the search page, if the site on it, the bot goes to it"""
+        on the second and + iteration, the bot checks our site on the search page, if the site on it, the bot goes to it
+        """
         start = 1
         first_iter = True
         for _ in range(50): # 50 pages
@@ -88,7 +88,7 @@ class TrafficBot:
                                 box = box
                             else:
                                 box = next(v)
-                            self.visit_site(randint(2, 5), box, k)
+                            self.visit_site(randint(10, 15), box, k)
                             time.sleep(2)
                             pag.press('home')
                             time.sleep(1)
@@ -96,7 +96,7 @@ class TrafficBot:
                 if site_on_page[0] == True:
                     pag.press('home')
                     time.sleep(1)
-                    self.visit_site(randint(10, 15), site_on_page[1], site_on_page[2])
+                    self.visit_site(randint(300, 600), site_on_page[1], site_on_page[2])
                     return True
                 first_iter = False
                 start = 10
@@ -104,7 +104,7 @@ class TrafficBot:
                 if site_on_page[0] == True:
                     pag.press('home')
                     time.sleep(1)
-                    self.visit_site(randint(10, 15), site_on_page[1], site_on_page[2])
+                    self.visit_site(randint(300, 600), site_on_page[1], site_on_page[2])
                     return True
                 start += 10
         return False
