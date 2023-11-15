@@ -9,11 +9,12 @@ import pyperclip
 import re
 import webbrowser
 
-keywords_list = ['python', 'js'] # keywords for search
+keywords_list = ['js', 'python'] # keywords for search
 
 site = "https://habr.com" # our site
 
 num_visits = 2 
+
 
 class TrafficBot:
     def __init__(self, site_url, search_keywords, num_visits):
@@ -21,6 +22,9 @@ class TrafficBot:
         self.search_keywords = search_keywords.copy()
         self.system = platform.system()
         self.num_visits = num_visits
+        self.center_displ = [pag.size()[0] // 2, pag.size()[1] // 2]
+        print(self.center_displ)
+
 
 
     def start_browser(self) -> None:
@@ -36,17 +40,6 @@ class TrafficBot:
     def close_browser(self) -> None:
         pag.hotkey('ctrl', 'w')
 
-
-    def move_proportionally(self, x, y, duration=0)-> None:
-        """move mouse propotionally screen size 1366/768"""
-        original_width, original_height = 1366, 768
-        size = pag.size()
-        new_width, new_height = (size.width, size.height)
-        relative_width = x / original_width
-        relative_height = y / original_height
-        new_x = int(relative_width * new_width)
-        new_y = int(relative_height * new_height)
-        pag.moveTo(new_x, new_y, duration)
 
 
     def search_and_fool_site(self)-> None:
@@ -81,7 +74,7 @@ class TrafficBot:
         first_iter = True
         for _ in range(50): # 50 pages
             self.load_search_page(keyword, start)
-            self.move_proportionally(300, 340, 1) # go to free area
+            pag.moveTo(self.center_displ)
 
             site_on_page = self.check_site_on_page()
 
@@ -91,19 +84,27 @@ class TrafficBot:
                 for k, v in sites_for_visit.items():
                     if k in two_random_sites:
                         for index, box in enumerate(v):
-                            if box != site_on_page[1] and index == 1:
-                                self.visit_site(randint(10, 15), box, k)
-                                time.sleep(2)
-                                pag.press('home')
-                                time.sleep(1)
+                            if k != site_on_page[2] and box != site_on_page[1] and index == 0:
+                                box = box
+                            else:
+                                box = next(v)
+                            self.visit_site(randint(2, 5), box, k)
+                            time.sleep(2)
+                            pag.press('home')
+                            time.sleep(1)
+                            break
                 if site_on_page[0] == True:
-                    self.visit_site(randint(300, 600), site_on_page[1], site_on_page[2])
+                    pag.press('home')
+                    time.sleep(1)
+                    self.visit_site(randint(10, 15), site_on_page[1], site_on_page[2])
                     return True
                 first_iter = False
                 start = 10
             else:
                 if site_on_page[0] == True:
-                    self.visit_site(randint(300, 600), site_on_page[1], site_on_page[2])
+                    pag.press('home')
+                    time.sleep(1)
+                    self.visit_site(randint(10, 15), site_on_page[1], site_on_page[2])
                     return True
                 start += 10
         return False
@@ -114,8 +115,9 @@ class TrafficBot:
         sites_for_visit = {}
         for i in range(6):
             results = pag.locateAllOnScreen('https.png')
+            time.sleep(1)
             sites_for_visit[i] = results
-            self.move_proportionally(300, 340)
+            pag.moveTo(self.center_displ)
             pag.scroll(-3)
             time.sleep(1)
         pag.press('home')
@@ -124,10 +126,7 @@ class TrafficBot:
 
     def load_search_page(self, keyword, start) -> None:
         """get search page google.com"""
-        url_area = pag.locateOnScreen('star.png')
-        pag.click(url_area)
-        #self.move_proportionally(500, 80)
-        #pag.click()
+        pag.hotkey('ctrl', 'l')
         url = f'https://www.google.com/search?q={keyword}&start={start}'
         pag.hotkey('ctrl', 'a')
         time.sleep(1)
@@ -142,8 +141,12 @@ class TrafficBot:
         """find our link in the text of the page. If site-link on page - check coordinates"""
         pag.hotkey('ctrl', 'a')
         pag.hotkey('ctrl', 'c')
-        self.move_proportionally(1000, 300)
-        pag.click()
+        pag.moveTo(self.center_displ)
+        pag.click(self.center_displ[0] * 1.5, self.center_displ[1] // 1.5)
+        time.sleep(0.5)
+        pag.moveTo(self.center_displ)
+        pag.press('home')
+        time.sleep(0.5)
         links = re.findall(r'https?://[^\s]+', pyperclip.paste())
         if self.site_url in links:
             find = False
@@ -152,11 +155,14 @@ class TrafficBot:
                 try:
                     coord = pag.locateOnScreen('site_url_screen.png')
                     find = True
+                    time.sleep(1)
                 except ImageNotFoundException:
-                    self.move_proportionally(660, 300)
+                    pag.moveTo(self.center_displ)
                     pag.scroll(-3)
                     time.sleep(1)
                     scroll +=1
+            pag.press('home')
+            time.sleep(1)
             return True, coord, scroll
         else:
             return False, False, False
@@ -164,6 +170,7 @@ class TrafficBot:
 
     def visit_site(self, time_to_visit, coords, scroll) -> None:
         """visit the site from the search page and scroll it"""
+        pag.moveTo(self.center_displ)
         for _ in range(scroll):
             pag.scroll(-3)
             time.sleep(1)
