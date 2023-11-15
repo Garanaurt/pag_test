@@ -49,6 +49,3 @@ TrafficBot is a simple Python script designed to simulate organic traffic to a s
 5. **Execution:**
    - Run the script using the command `python main.py`.
 
-### Notes:
-
-- The script is currently configured for Linux and Firefox browser. If you are using a different operating system, adjust the browser opening mechanism in the `start_browser` method accordingly.
